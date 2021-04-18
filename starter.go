@@ -10,35 +10,48 @@ import (
 var ticker int = 0
 var mdText string = "Первый запуск\n\n"
 var count int = 0
-var guess int = -1
-var number int = rand.Intn(10)
+var guess int = rand.Intn(16)
+var number int = rand.Intn(16)
+var lowNum int = 0
+var upNum int = 10
 var ptik int = 0
 
 func Ticker() {
-	ticker = (ticker+1)%1000000000 - ticker%1000000000 + ticker
+	ticker = (ticker+1)%120 - ticker%120 + ticker
 	if count == 0 {
 		mdText = ""
 	}
-	if (guess < 0) || (guess > 9) {
-		guess = rand.Intn(10)
+	if guess < 0 {
+		guess = rand.Intn(16 + ticker)
 	}
+
 	if count <= 0 {
-		mdText = fmt.Sprintf("Это %d?", guess) + "\n\n" + mdText
+		mdText = fmt.Sprintf("Это %d?\n ", guess) + mdText
 		count = -count + 1
 	} else if guess != number {
 		if guess < number {
 			mdText = fmt.Sprintf("Нет, не %d, а больше\n", guess) + mdText
-			guess++
+			lowNum = guess
+			if lowNum >= upNum-1 {
+				upNum = (lowNum + 1) << 1
+			}
+			guess = lowNum + rand.Intn(upNum-lowNum-1) + 1
 		} else {
 			mdText = fmt.Sprintf("Нет, не %d, а меньше\n", guess) + mdText
-			guess--
+			upNum = guess
+			if lowNum >= upNum-1 {
+				lowNum = (upNum>>1 - 1)
+			}
+			guess = upNum - rand.Intn(upNum-lowNum-1) - 1
 		}
 		count = -count
 	} else {
 		mdText = fmt.Sprintf("\nУгадал c %d попытки, это %d\n", count, number) + mdText
 		count = 0
-		guess = -1
-		number = rand.Intn(10)
+		guess = rand.Intn(16 + ticker)
+		upNum = 0
+		lowNum = 0
+		number = rand.Intn(16 + ticker)
 	}
 	return
 }
@@ -54,7 +67,7 @@ type Message struct {
 
 func Handler() ([]byte, error) {
 	var tmpTOP string = ""
-	var tmpDOWN string = "\nУгадай число от 0 до 9.\n"
+	var tmpDOWN string = "\nУгадай число.\n"
 	Ticker()
 	switch ticker % 2 {
 	case ptik:
@@ -62,7 +75,7 @@ func Handler() ([]byte, error) {
 	default:
 		tmpTOP += fmt.Sprintf("%d-й тик!\n", (ticker >> 1))
 	}
-	tmpTOP += "\nОбнови страницу, что бы продолжить...\nУгадай число от 0 до 9.\n"
+	tmpTOP += fmt.Sprintf("\nОбнови страницу, что бы продолжить...\nУгадай число быстрее робота: примерный диапазон %d...%d.\n", lowNum+1, upNum-1)
 
 	switch time.Now().Weekday() {
 
@@ -81,10 +94,10 @@ func Handler() ([]byte, error) {
 	case time.Sunday:
 		tmpTOP = "Сегодня воскресенье.\n" + tmpTOP
 	}
-
+	tmpDOWN += "(c) AeriswavE\nИгра функцией на Яндекс.облакЕ\n"
 	var tmpText string = tmpTOP + "\n\n" + mdText + "\n\n" + tmpDOWN
 
-	m := Message{"Автор сообщения", tmpText, 1294706395881547000, "ссылка"}
+	m := Message{"AeriswavE", tmpText, 9057119603, "профи.сайт/АТ"}
 	return json.Marshal(m)
 }
 
