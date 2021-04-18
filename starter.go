@@ -66,6 +66,7 @@ type Message struct {
 }
 
 func Handler() ([]byte, error) {
+
 	var tmpTOP string = ""
 	var tmpDOWN string = "\nУгадай число.\n"
 	Ticker()
