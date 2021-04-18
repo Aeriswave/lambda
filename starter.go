@@ -97,7 +97,7 @@ func Handler() ([]byte, error) {
 	tmpDOWN += "(c) AeriswavE\nИгра функцией на Яндекс.облакЕ\n"
 	var tmpText string = tmpTOP + "\n\n" + mdText + "\n\n" + tmpDOWN
 
-	m := Message{"AeriswavE", tmpText, 9057119603, "профи.сайт/АТ"}
+	m := Message{"AeriswavE", tmpText, 1234567, "профи.сайт/АТ"}
 	return json.Marshal(m)
 }
 
