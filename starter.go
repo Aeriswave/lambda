@@ -10,10 +10,10 @@ import (
 var ticker int = 0
 var mdText string = "Первый запуск\n\n"
 var count int = 0
-var guess int = rand.Intn(16)
-var number int = rand.Intn(16)
-var lowNum int = 0
-var upNum int = 10
+var lowNum int = -1
+var upNum int = 50
+var guess int = rand.Intn(upNum - lowNum - 1)
+var number int = rand.Intn(upNum - lowNum - 1)
 var ptik int = 0
 
 func Ticker() {
@@ -33,25 +33,25 @@ func Ticker() {
 			mdText = fmt.Sprintf("Нет, не %d, а больше\n", guess) + mdText
 			lowNum = guess
 			if lowNum >= upNum-1 {
-				upNum = (lowNum + 1) << 1
+				upNum = (lowNum + 1) << 2
 			}
-			guess = lowNum + rand.Intn(upNum-lowNum-1) + 1
+			guess = lowNum + (upNum-lowNum)>>1
 		} else {
 			mdText = fmt.Sprintf("Нет, не %d, а меньше\n", guess) + mdText
 			upNum = guess
 			if lowNum >= upNum-1 {
-				lowNum = (upNum>>1 - 1)
+				lowNum = -1
 			}
-			guess = upNum - rand.Intn(upNum-lowNum-1) - 1
+			guess = upNum - (upNum-lowNum)>>1
 		}
 		count = -count
 	} else {
 		mdText = fmt.Sprintf("\nУгадал c %d попытки, это %d\n", count, number) + mdText
 		count = 0
-		guess = rand.Intn(16 + ticker)
+		guess = rand.Intn(10 + lowNum + upNum>>1 + ticker)
 		upNum = 0
-		lowNum = 0
-		number = rand.Intn(16 + ticker)
+		lowNum = -1
+		number = rand.Intn(10 + lowNum + upNum + ticker)
 	}
 	return
 }
@@ -59,10 +59,11 @@ func Ticker() {
 type JSONString string
 
 type Message struct {
-	Name string
-	Body string
-	Time int64
-	Ul   string
+	Name   string
+	Body   string
+	Time   int64
+	Ul     string
+	Answer string
 }
 
 func Handler() ([]byte, error) {
@@ -94,10 +95,10 @@ func Handler() ([]byte, error) {
 	case time.Sunday:
 		tmpTOP = "Сегодня воскресенье.\n" + tmpTOP
 	}
-	tmpDOWN += "(c) AeriswavE\nИгра функцией на Яндекс.облакЕ\n"
+	tmpDOWN += "Игра функцией на Яндекс.облакЕ\n(c) Тряпицын Алексей\n"
 	var tmpText string = tmpTOP + "\n\n" + mdText + "\n\n" + tmpDOWN
 
-	m := Message{"AeriswavE", tmpText, 9057119603, "профи.сайт/АТ"}
+	m := Message{"Автор Тряпицын Алексей Васильевич", tmpText, 9057119603, "профи.сайт/АТ", fmt.Sprintf("Правильный ответ: %d", number)}
 	return json.Marshal(m)
 }
 
