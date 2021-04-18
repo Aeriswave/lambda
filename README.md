@@ -5,7 +5,7 @@
 (3) в редакторе кода создать файл "starter.go" и скопировать в него код из файла "starter.go"
 
 PS Импорт в виде команды import пока не сработал
-> import {
->   . "github.com/Aeriswave/lambda"
->}
+> import {   
+>   . "github.com/Aeriswave/lambda"   
+>}   
 >
