@@ -98,7 +98,7 @@ func Handler() ([]byte, error) {
 	tmpDOWN += "Игра функцией на Яндекс.облакЕ\n(c) Тряпицын Алексей\n"
 	var tmpText string = tmpTOP + "\n\n" + mdText + "\n\n" + tmpDOWN
 
-	m := Message{"Автор Тряпицын Алексей Васильевич", tmpText, 9057119603, "профи.сайт/АТ", fmt.Sprintf("Правильный ответ: %d", number)}
+	m := Message{"Автор", tmpText, 1234567, "профи.сайт/АТ", fmt.Sprintf("Правильный ответ: %d", number)}
 	return json.Marshal(m)
 }
 
