@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	url := "https://functions.yandexcloud.net/d4ebb1qpmc2eo20avfan?requestId=1"
+	url := "https://ссылка на функцию"
 	fmt.Println("URL:>", url)
 	/*
 		type Identity struct {
