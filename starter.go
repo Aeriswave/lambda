@@ -34,8 +34,10 @@ func Ticker() {
 			lowNum = guess
 			if lowNum >= upNum-1 {
 				upNum = (lowNum + 1) << 1
+				guess = upNum
+			} else {
+				guess = lowNum + rand.Intn(upNum-lowNum-1) + 1
 			}
-			guess = lowNum + rand.Intn(upNum-lowNum-1) + 1
 		} else {
 			mdText = fmt.Sprintf("Нет, не %d, а меньше\n", guess) + mdText
 			upNum = guess
