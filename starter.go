@@ -8,7 +8,7 @@ import (
 )
 
 var ticker int = 0
-var mdText string = "Первый запуск\n\n"
+var mdText TextTemplate
 var count int = 0
 var lowNum int = -1
 var upNum int = 50
