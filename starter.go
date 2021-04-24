@@ -1,4 +1,4 @@
-package main
+package TextFormer
 
 import (
 	"encoding/json"
