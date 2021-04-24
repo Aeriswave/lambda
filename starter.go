@@ -3,15 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"lambda/lambda/tst-mod/lambda/lambda/github.com/aeriswave/jsonText/jsonText"
 	"math/rand"
 	"time"
 
-	//	jsText "lambda/lambda/github.com/aeriswave/jsonText/"
-	//tst "lambda/lambda/tstmod"
 	txt "github.com/aeriswave/jsonText"
 )
 
-//var nnn string = jsText.Text.Test2
 var ticker int = 0
 var mdText string = "Первый запуск\n\n"
 var count int = 0
@@ -69,25 +67,25 @@ func Ticker() {
 }
 
 type Message struct {
-	Name   string
-	Text   txt.TextTemplate
-	Body   string
+	Name string
+	Text string
+	//	Body   string
 	Time   int64
 	Ul     string
 	Answer string
 }
 
 func Handler() ([]byte, error) {
-	var tmpTOP string = ""
+	var tmpTOP jsonText.TextString = ""
 	var tmpDOWN string = "\nУгадай число.\n"
 	Ticker()
 	switch ticker % 2 {
 	case ptik:
-		tmpTOP += "Так, сделан шаг!\n"
+		tmpTOP.AddLowerLines("Так, сделан шаг!")
 	default:
-		tmpTOP += fmt.Sprintf("%d-й тик!\n", (ticker >> 1))
+		tmpTOP.AddLowerLines(fmt.Sprintf("%d-й тик!", (ticker >> 1)))
 	}
-	tmpTOP += fmt.Sprintf("\nОбнови страницу, что бы продолжить...\nУгадай число быстрее робота: примерный диапазон %d...%d.\n", lowNum+1, upNum-1)
+	tmpTOP.AddLowerLines("Обнови страницу, что бы продолжить...", fmt.Sprintf("Угадай число быстрее робота: примерный диапазон %d...%d.", lowNum+1, upNum-1))
 
 	switch time.Now().Weekday() {
 
@@ -107,11 +105,15 @@ func Handler() ([]byte, error) {
 		tmpTOP = "Сегодня воскресенье.\n" + tmpTOP
 	}
 	tmpDOWN += "Игра функцией на Яндекс.облакЕ\n(c) Тряпицын Алексей\n"
-	var tmpText string = tmpTOP + "\n\n" + mdText + "\n\n" + tmpDOWN
+	//	var tmpText string = tmpTOP + "\n\n" + mdText + "\n\n" + tmpDOWN
 
 	var mmm txt.TextTemplate
-	mmm.Set("Заголовок", "Текст", "Подтекст")
-	m := Message{"Автор Тряпицын Алексей Васильевич", mmm.Get(), tmpText, 9057119603, "профи.сайт/АТ", fmt.Sprintf("Правильный ответ: %d", number)}
+	mmm.Set("", mdText, tmpDOWN)
+	tt, err := mmm.Get()
+	if err == nil {
+		err = nil
+	}
+	m := Message{"Автор Тряпицын Алексей Васильевич", string(tt), 9057119603, "профи.сайт/АТ", fmt.Sprintf("Правильный ответ: %d", number)}
 
 	return json.Marshal(m)
 }
