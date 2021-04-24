@@ -9,3 +9,6 @@ PS Импорт в виде команды import пока не сработал
 >   . "github.com/Aeriswave/lambda"   
 >}   
 >
+
+Полезная информация
+https://habr.com/ru/company/otus/blog/503918/
