@@ -5,16 +5,26 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+
+	//	jsText "lambda/lambda/github.com/aeriswave/jsonText/"
+	//tst "lambda/lambda/tstmod"
+	txt "github.com/aeriswave/jsonText"
 )
 
+//var nnn string = jsText.Text.Test2
 var ticker int = 0
-var mdText TextTemplate
+var mdText string = "Первый запуск\n\n"
 var count int = 0
 var lowNum int = -1
 var upNum int = 50
 var guess int = rand.Intn(upNum - lowNum - 1)
 var number int = rand.Intn(upNum - lowNum - 1)
 var ptik int = 0
+
+func Main() {
+	//	var ttt jsonText
+	return
+}
 
 func Ticker() {
 	ticker = (ticker+1)%120 - ticker%120 + ticker
@@ -58,10 +68,9 @@ func Ticker() {
 	return
 }
 
-type JSONString string
-
 type Message struct {
 	Name   string
+	Text   txt.TextTemplate
 	Body   string
 	Time   int64
 	Ul     string
@@ -100,10 +109,9 @@ func Handler() ([]byte, error) {
 	tmpDOWN += "Игра функцией на Яндекс.облакЕ\n(c) Тряпицын Алексей\n"
 	var tmpText string = tmpTOP + "\n\n" + mdText + "\n\n" + tmpDOWN
 
-	m := Message{"Автор Тряпицын Алексей Васильевич", tmpText, 9057119603, "профи.сайт/АТ", fmt.Sprintf("Правильный ответ: %d", number)}
-	return json.Marshal(m)
-}
+	var mmm txt.TextTemplate
+	mmm.Set("Заголовок", "Текст", "Подтекст")
+	m := Message{"Автор Тряпицын Алексей Васильевич", mmm.Get(), tmpText, 9057119603, "профи.сайт/АТ", fmt.Sprintf("Правильный ответ: %d", number)}
 
-func (j JSONString) MarshalJSON() ([]byte, error) {
-	return []byte(j), nil
+	return json.Marshal(m)
 }
