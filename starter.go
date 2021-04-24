@@ -3,9 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"lambda/lambda/tst-mod/lambda/lambda/github.com/aeriswave/jsonText/jsonText"
+
 	"math/rand"
 	"time"
+
+	//"lambda/lambda/tst-mod/lambda/lambda/github.com/aeriswave/jsonText/jsonText"
 
 	txt "github.com/aeriswave/jsonText"
 )
@@ -76,7 +78,7 @@ type Message struct {
 }
 
 func Handler() ([]byte, error) {
-	var tmpTOP jsonText.TextString = ""
+	var tmpTOP txt.TextString = ""
 	var tmpDOWN string = "\nУгадай число.\n"
 	Ticker()
 	switch ticker % 2 {

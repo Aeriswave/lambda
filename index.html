@@ -1,0 +1,31 @@
+<form>
+    <h2>Заголовок страницы</h2>
+    <input type="button" onclick="window.location.href = 'https://yandex.ru/search/?text=поисковая строка 0';" value="0"/>
+    <input type="button" onclick="window.location.href = 'https://yandex.ru/search/?text=поисковая строка 1';" value="1"/>
+    
+    <!-- Resources on other origins must be CORS-enabled. -->
+    <link rel="import" href="https://functions.yandexcloud.net/d4el9ac0364uhhl4137u">
+    <link rel="import" href="templates/tab-content.html" id="tab-content">
+    <p>Текст на странице.</p>
+</form>
+
+<html>
+    <head>
+        <title> Отправляем JSON-данные на сервер </title>
+        <script src="https://functions.yandexcloud.net/d4el9ac0364uhhl4137u"></script>
+    </head>
+    <body style="text-align:center;" id="body">
+        <!-- заголовок -->
+        <h1> Простая форма для проверки работы JSON </h1>
+        <!-- делаем форму с полями ввода -->
+        <p>
+            <input type="text" id="name" placeholder="Ваше имя">
+            <input type="text" id="lastname" placeholder="и фамилия">
+            <!-- по нажатию на эту кнопку данные уйдут на сервер -->
+            <button onclick="sendJSON()">Проверить JSON</button>
+            <!-- а вот тут они появятся снова, но уже после обработки сервером -->
+            <p class="result" style="color:blue">
+            </p> 
+        </p> 
+    </body> 
+</html>
