@@ -10,5 +10,8 @@ PS Импорт в виде команды import пока не сработал
 >}   
 >
 
-Полезная информация
-https://habr.com/ru/company/otus/blog/503918/
+Посмотреть, как работает можно тут:   
+https://functions.yandexcloud.net/d4el9ac0364uhhl4137u   
+
+Полезная информация   
+https://habr.com/ru/company/otus/blog/503918/   
